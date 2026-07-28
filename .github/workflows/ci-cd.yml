@@ -55,6 +55,12 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Run tests
+        run: npm test
+
+      - name: Build Docker image
+        run: docker build -t subscription-tracker-api:ci .
+
       - name: Build Docker image
         run: docker build -t subscription-tracker-api:ci .
 

@@ -28,25 +28,6 @@ subscriptionRouter.get('/', (req, res) => res.send({ title: 'GET all subscriptio
 
 /**
  * @swagger
- * /api/v1/subscriptions/{id}:
- *   get:
- *     summary: Get subscription details
- *     tags: [Subscriptions]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Subscription ID
- *     responses:
- *       200:
- *         description: Subscription details
- */
-subscriptionRouter.get('/:id', (req, res) => res.send({ title: 'GET subscription details' }));
-
-/**
- * @swagger
  * /api/v1/subscriptions:
  *   post:
  *     summary: Create a subscription
@@ -100,6 +81,32 @@ subscriptionRouter.get('/:id', (req, res) => res.send({ title: 'GET subscription
  */
 subscriptionRouter.post('/', authorize, createSubscription);
 
+
+
+/**
+ * @swagger
+ * /api/v1/subscriptions/{id}:
+ *   get:
+ *     summary: Get subscription details
+ *     tags: [Subscriptions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Subscription ID
+ *     responses:
+ *       200:
+ *         description: Subscription details
+ */
+
+subscriptionRouter.get('/upcoming-renewals', (req, res) => res.send({ title: 'GET upcoming renewals' }));
+
+subscriptionRouter.get('/:id', (req, res) => res.send({ title: 'GET subscription details' }));
+
+
+
 subscriptionRouter.put('/:id', (req, res) => res.send({ title: 'UPDATE subscription' }));
 
 subscriptionRouter.delete('/:id', (req, res) => res.send({ title: 'DELETE subscription' }));
@@ -141,6 +148,5 @@ subscriptionRouter.get('/user/:id', authorize, getUserSubscriptions);
 
 subscriptionRouter.put('/:id/cancel', (req, res) => res.send({ title: 'CANCEL subscription' }));
 
-subscriptionRouter.get('/upcoming-renewals', (req, res) => res.send({ title: 'GET upcoming renewals' }));
 
 export default subscriptionRouter;
