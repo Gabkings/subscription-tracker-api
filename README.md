@@ -4,6 +4,47 @@ A **production-ready Subscription Management System API** that handles **real us
 
 Authenticate users using JWTs, connect a database, create models and schemas, and integrate it with ORMs. Structure the architecture of your API to ensure scalability and seamless communication with the frontend.  
 
+## Docker
+
+Run the API with MongoDB using Docker Compose: `bash docker compose up --build `
+
+
+The API will be available at: http://localhost:5500
+
+
+MongoDB runs inside Docker and is available to the API at: mongodb://mongo:27017/subscription_tracker
+
+
+For local Docker Compose configuration, create a `.env` file:
+
+env JWT_SECRET=replace-with-a-secure-secret
+JWT_EXPIRES_IN=1d
+ARCJET_KEY=replace-with-your-arcjet-key 
+ARCJET_ENV=development 
+QSTASH_URL=[http://localhost:8080](http://localhost:8080) 
+QSTASH_TOKEN=replace-with-your-qstash-token 
+EMAIL_PASSWORD=replace-with-your-email-password
+
+
+
+## GitHub CI/CD
+
+The project includes a GitHub Actions workflow at: .github/workflows/ci-cd.yml
+
+
+It runs linting, builds the Docker image, validates Docker Compose, and publishes the image to GitHub Container Registry on push.
+
+Published image: ghcr.io/<github-owner>/subscription-tracker-api:lates
+
+
+
+
+
+## API Documentation
+
+Swagger API documentation is available after starting the server: http://localhost:5500/api-docs
+
+
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 

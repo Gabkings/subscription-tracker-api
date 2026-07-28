@@ -1,6 +1,9 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 
+import swaggerUi from 'swagger-ui-express';
+
+
 import authRouter from './routes/auth.router.js';
 
 import { PORT } from './config/env.js';
@@ -10,12 +13,20 @@ import userRouter from './routes/user.router.js';
 import subscriptionRouter from './routes/subscription.routes.js';
 import workflowRouter from './routes/workflow.routes.js';
 import arcjetMiddleware from './middlewares/arcjet.middleware.js';
+import swaggerSpec from './config/swagger.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 app.use(arcjetMiddleware)
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/users", userRouter)
@@ -34,3 +45,5 @@ app.listen(PORT, async () => {
 });
 
 export default app;
+
+

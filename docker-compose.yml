@@ -1,0 +1,49 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subscription-tracker-api
+    restart: unless-stopped
+    ports:
+      - "5500:5500"
+    environment:
+      NODE_ENV: production
+      PORT: 5500
+      SERVER_URL: http://localhost:5500
+      MONGO_URI: mongodb://mongo:27017/subscription_tracker
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1d}
+      ARCJET_KEY: ${ARCJET_KEY}
+      ARCJET_ENV: ${ARCJET_ENV:-development}
+      QSTASH_URL: ${QSTASH_URL:-http://localhost:8080}
+      QSTASH_TOKEN: ${QSTASH_TOKEN}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - subscription-tracker-network
+
+  mongo:
+    image: mongo:8
+    container_name: subscription-tracker-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - subscription-tracker-network
+
+volumes:
+  mongo-data:
+
+networks:
+  subscription-tracker-network:
+    driver: bridge

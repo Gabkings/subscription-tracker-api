@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Environment variables
+.env*.local
+
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentation
+README.md
+
+# Config
+eslint.config.js
+
+# Samples/Tests
+pyhton_sample
